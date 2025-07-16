@@ -1,1376 +1,1616 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Comprehensive Impact | Namibia Uranium Hub</title>
-    <link href="css/style.css" rel="stylesheet">
-    <link href="css/animations.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet" />
+    <link href="css/animations.css" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
     <style>
-        .dashboard-card {
-            border: none;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s ease;
-            margin-bottom: 30px;
-            background-color: white;
-        }
-        .dashboard-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-        .card-header {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 15px 20px;
-        }
-        .card-body {
-            padding: 20px;
-        }
-        .chart-container-sm {
-            position: relative;
-            height: 250px;
-            width: 100%;
-        }
-        .impact-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 15px;
-            padding: 15px;
-            background-color: #f8f9fa;
-            border-radius: 8px;
-        }
-        .impact-icon {
-            width: 50px;
-            height: 50px;
-            background-color: rgba(52, 152, 219, 0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 15px;
-            color: var(--secondary-color);
-            font-size: 20px;
-        }
-        .impact-content {
-            flex-grow: 1;
-        }
-        .impact-value {
-            font-weight: bold;
-            font-size: 1.1rem;
-            color: var(--primary-color);
-        }
-        .slider-container {
-            margin: 30px 0;
-        }
-        .slider-labels {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 5px;
-        }
-        .simulation-result {
-            background-color: white;
-            border-radius: 10px;
-            padding: 20px;
-            margin-top: 20px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            display: none;
-        }
-        .simulation-result.active {
-            display: block;
-            animation: fadeIn 0.5s ease-in;
-        }
-        .water-drop {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background-color: #3498db;
-            border-radius: 50%;
-            opacity: 0.7;
-        }
-        .radiation-level {
-            display: inline-block;
-            padding: 3px 8px;
-            border-radius: 4px;
-            font-weight: bold;
-            font-size: 0.8rem;
-        }
-        .safe {
-            background-color: #27ae60;
-            color: white;
-        }
-        .moderate {
-            background-color: #f39c12;
-            color: white;
-        }
-        .high {
-            background-color: #e74c3c;
-            color: white;
-        }
-        .data-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        .data-table th, .data-table td {
-            padding: 12px 15px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-        .data-table th {
-            background-color: #f8f9fa;
-            font-weight: 600;
-        }
-        .data-table tr:hover {
-            background-color: #f1f1f1;
-        }
-        .impact-section {
-            margin-bottom: 40px;
-        }
-        .impact-section h2 {
-            border-bottom: 2px solid var(--primary-color);
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-        }
-        .impact-badge {
-            font-size: 0.8rem;
-            padding: 5px 10px;
-            border-radius: 20px;
-            margin-right: 10px;
-        }
-        .environment-badge {
-            background-color: #27ae60;
-            color: white;
-        }
-        .social-badge {
-            background-color: #3498db;
-            color: white;
-        }
-        .economic-badge {
-            background-color: #e67e22;
-            color: white;
-        }
+      .dashboard-card {
+        border: none;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+        margin-bottom: 30px;
+        background-color: white;
+      }
+      .dashboard-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      }
+      .card-header {
+        background-color: var(--primary-color);
+        color: white;
+        padding: 15px 20px;
+      }
+      .card-body {
+        padding: 20px;
+      }
+      .chart-container-sm {
+        position: relative;
+        height: 250px;
+        width: 100%;
+      }
+      .impact-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+      }
+      .impact-icon {
+        width: 50px;
+        height: 50px;
+        background-color: rgba(52, 152, 219, 0.1);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 15px;
+        color: var(--secondary-color);
+        font-size: 20px;
+      }
+      .impact-content {
+        flex-grow: 1;
+      }
+      .impact-value {
+        font-weight: bold;
+        font-size: 1.1rem;
+        color: var(--primary-color);
+      }
+      .slider-container {
+        margin: 30px 0;
+      }
+      .slider-labels {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 5px;
+      }
+      .simulation-result {
+        background-color: white;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 20px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        display: none;
+      }
+      .simulation-result.active {
+        display: block;
+        animation: fadeIn 0.5s ease-in;
+      }
+      .water-drop {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        background-color: #3498db;
+        border-radius: 50%;
+        opacity: 0.7;
+      }
+      .radiation-level {
+        display: inline-block;
+        padding: 3px 8px;
+        border-radius: 4px;
+        font-weight: bold;
+        font-size: 0.8rem;
+      }
+      .safe {
+        background-color: #27ae60;
+        color: white;
+      }
+      .moderate {
+        background-color: #f39c12;
+        color: white;
+      }
+      .high {
+        background-color: #e74c3c;
+        color: white;
+      }
+      .data-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      .data-table th,
+      .data-table td {
+        padding: 12px 15px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+      .data-table th {
+        background-color: #f8f9fa;
+        font-weight: 600;
+      }
+      .data-table tr:hover {
+        background-color: #f1f1f1;
+      }
+      .impact-section {
+        margin-bottom: 40px;
+      }
+      .impact-section h2 {
+        border-bottom: 2px solid var(--primary-color);
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+      }
+      .impact-badge {
+        font-size: 0.8rem;
+        padding: 5px 10px;
+        border-radius: 20px;
+        margin-right: 10px;
+      }
+      .environment-badge {
+        background-color: #27ae60;
+        color: white;
+      }
+      .social-badge {
+        background-color: #3498db;
+        color: white;
+      }
+      .economic-badge {
+        background-color: #e67e22;
+        color: white;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <!-- Animated Background -->
     <div class="animated-bg"></div>
-    
+
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
-        <div class="container">
-            <a class="navbar-brand" href="index.html">
-                <span>Namibia Uranium Hub</span>
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="map.html">Uranium Map</a></li>
-                    <li class="nav-item"><a class="nav-link" href="methods.html">Mining Methods</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="environment.html">Comprehensive Impact</a></li>
-                    <li class="nav-item"><a class="nav-link" href="policy.html">Policy & Safety</a></li>
-                    <li class="nav-item"><a class="nav-link" href="quiz.html">Educational Quiz</a></li>
-                </ul>
-            </div>
+      <div class="container">
+        <a class="navbar-brand" href="index.html">
+          <span>Namibia Uranium Hub</span>
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="map.html">Uranium Map</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="methods.html">Mining Methods</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="environment.html"
+                >Comprehensive Impact</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="policy.html">Policy & Safety</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="quiz.html">Educational Quiz</a>
+            </li>
+          </ul>
         </div>
+      </div>
     </nav>
 
     <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-8">
-                    <h1 class="display-4 fw-bold mb-4">Comprehensive Impact of Uranium Mining in Namibia</h1>
-                    <p class="lead mb-4">Examining the environmental, social, and economic dimensions of Namibia's uranium industry through verified data and research.</p>
-                </div>
-            </div>
+    <section class="hero" style="background-image: url(images/Namwoman.jpg)">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-8">
+            <h1 class="display-4 fw-bold mb-4">
+              Comprehensive Impact of Uranium Mining in Namibia
+            </h1>
+            <p class="lead mb-4">
+              Examining the environmental, social, and economic dimensions of
+              Namibia's uranium industry through verified data and research.
+            </p>
+          </div>
         </div>
+      </div>
     </section>
 
     <!-- Dashboard Section -->
     <section class="py-5">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="alert alert-info">
-                        <i class="fas fa-info-circle me-2"></i>
-                        Namibia's uranium sector contributes approximately 10% of global uranium production, with significant impacts across multiple dimensions (World Nuclear Association, 2023).
-                    </div>
-                </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="alert alert-info">
+              <i class="fas fa-info-circle me-2"></i>
+              Namibia's uranium sector contributes approximately 10% of global
+              uranium production, with significant impacts across multiple
+              dimensions (World Nuclear Association, 2023).
             </div>
-            
-            <!-- Environmental Impact Section -->
-            <div class="impact-section">
-                <h2><i class="fas fa-leaf me-2"></i> Environmental Impact</h2>
-                <div class="row">
-                    <div class="col-lg-4">
-                        <div class="dashboard-card">
-                            <div class="card-header" style="background-color: #27ae60;">
-                                <h3><i class="fas fa-tint me-2"></i> Water Management</h3>
-                            </div>
-                            <div class="card-body">
-                                <div class="chart-container-sm">
-                                    <canvas id="waterChart"></canvas>
-                                </div>
-                                <div class="impact-item">
-                                    <div class="impact-icon" style="color: #27ae60;">
-                                        <i class="fas fa-industry"></i>
-                                    </div>
-                                    <div class="impact-content">
-                                        <h5>Desalination Plants</h5>
-                                        <div class="impact-value">$450 million investment</div>
-                                        <small>Two major plants for mining operations (Namibia Water Corporation, 2023)</small>
-                                    </div>
-                                </div>
-                                <div class="impact-item">
-                                    <div class="impact-icon" style="color: #27ae60;">
-                                        <i class="fas fa-recycle"></i>
-                                    </div>
-                                    <div class="impact-content">
-                                        <h5>Water Recycling</h5>
-                                        <div class="impact-value">80% average</div>
-                                        <small>Across major operations (Ministry of Mines and Energy, 2022)</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="col-lg-4">
-                        <div class="dashboard-card">
-                            <div class="card-header" style="background-color: #16a085;">
-                                <h3><i class="fas fa-radiation me-2"></i> Radiation & Waste</h3>
-                            </div>
-                            <div class="card-body">
-                                <div class="chart-container-sm">
-                                    <canvas id="radiationChart"></canvas>
-                                </div>
-                                <div class="impact-item">
-                                    <div class="impact-icon" style="color: #16a085;">
-                                        <i class="fas fa-hard-hat"></i>
-                                    </div>
-                                    <div class="impact-content">
-                                        <h5>Worker Safety</h5>
-                                        <div class="impact-value">
-                                            <span class="radiation-level safe">4.8 mSv/year</span> average
-                                        </div>
-                                        <small>Below 20 mSv/year limit (IAEA standards)</small>
-                                    </div>
-                                </div>
-                                <div class="impact-item">
-                                    <div class="impact-icon" style="color: #16a085;">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </div>
-                                    <div class="impact-content">
-                                        <h5>Tailings Management</h5>
-                                        <div class="impact-value">30 million tons/year</div>
-                                        <small>Engineered facilities with monitoring (ERM Report, 2023)</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="col-lg-4">
-                        <div class="dashboard-card">
-                            <div class="card-header" style="background-color: #2ecc71;">
-                                <h3><i class="fas fa-paw me-2"></i> Biodiversity</h3>
-                            </div>
-                            <div class="card-body">
-                                <div class="chart-container-sm">
-                                    <canvas id="biodiversityChart"></canvas>
-                                </div>
-                                <div class="impact-item">
-                                    <div class="impact-icon" style="color: #2ecc71;">
-                                        <i class="fas fa-tree"></i>
-                                    </div>
-                                    <div class="impact-content">
-                                        <h5>Land Rehabilitation</h5>
-                                        <div class="impact-value">650 hectares</div>
-                                        <small>Revegetated since 2010 (Ministry of Environment, 2023)</small>
-                                    </div>
-                                </div>
-                                <div class="impact-item">
-                                    <div class="impact-icon" style="color: #2ecc71;">
-                                        <i class="fas fa-exclamation-triangle"></i>
-                                    </div>
-                                    <div class="impact-content">
-                                        <h5>Sensitive Areas</h5>
-                                        <div class="impact-value">3 protected areas</div>
-                                        <small>Within 50km of mining operations (Namibia Chamber of Environment)</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="row mt-4">
-                    <div class="col-lg-12">
-                        <div class="dashboard-card">
-                            <div class="card-header" style="background-color: #3498db;">
-                                <h3><i class="fas fa-chart-line me-2"></i> Environmental Trends</h3>
-                            </div>
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-lg-8">
-                                        <div class="chart-container">
-                                            <canvas id="envTrendsChart"></canvas>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <h4>Key Environmental Indicators</h4>
-                                        <div class="impact-item">
-                                            <span class="impact-badge environment-badge">ENV</span>
-                                            <div class="impact-content">
-                                                <h5>Carbon Footprint</h5>
-                                                <div class="impact-value">0.12 kg CO₂e/kWh</div>
-                                                <small>Compared to 0.45 kg for coal (WNA, 2023)</small>
-                                            </div>
-                                        </div>
-                                        <div class="impact-item">
-                                            <span class="impact-badge environment-badge">ENV</span>
-                                            <div class="impact-content">
-                                                <h5>Water Use Efficiency</h5>
-                                                <div class="impact-value">+25% since 2015</div>
-                                                <small>Improved recycling technologies</small>
-                                            </div>
-                                        </div>
-                                        <div class="impact-item">
-                                            <span class="impact-badge environment-badge">ENV</span>
-                                            <div class="impact-content">
-                                                <h5>Radiation Reduction</h5>
-                                                <div class="impact-value">-40% since 2010</div>
-                                                <small>Improved shielding and practices</small>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Social Impact Section -->
-            <div class="impact-section">
-                <h2><i class="fas fa-users me-2"></i> Social Impact</h2>
-                <div class="row">
-                    <div class="col-lg-4">
-                        <div class="dashboard-card">
-                            <div class="card-header" style="background-color: #3498db;">
-                                <h3><i class="fas fa-briefcase me-2"></i> Employment</h3>
-                            </div>
-                            <div class="card-body">
-                                <div class="chart-container-sm">
-                                    <canvas id="employmentChart"></canvas>
-                                </div>
-                                <div class="impact-item">
-                                    <span class="impact-badge social-badge">SOC</span>
-                                    <div class="impact-content">
-                                        <h5>Direct Employment</h5>
-                                        <div class="impact-value">6,200 jobs</div>
-                                        <small>90% Namibian citizens (Chamber of Mines, 2023)</small>
-                                    </div>
-                                </div>
-                                <div class="impact-item">
-                                    <span class="impact-badge social-badge">SOC</span>
-                                    <div class="impact-content">
-                                        <h5>Gender Representation</h5>
-                                        <div class="impact-value">27% female</div>
-                                        <small>Up from 18% in 2015 (Rössing Sustainability Report)</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="col-lg-4">
-                        <div class="dashboard-card">
-                            <div class="card-header" style="background-color: #2980b9;">
-                                <h3><i class="fas fa-graduation-cap me-2"></i> Education & Skills</h3>
-                            </div>
-                            <div class="card-body">
-                                <div class="chart-container-sm">
-                                    <canvas id="educationChart"></canvas>
-                                </div>
-                                <div class="impact-item">
-                                    <span class="impact-badge social-badge">SOC</span>
-                                    <div class="impact-content">
-                                        <h5>Training Investment</h5>
-                                        <div class="impact-value">$8.5 million/year</div>
-                                        <small>Across major operations (Husab Report, 2023)</small>
-                                    </div>
-                                </div>
-                                <div class="impact-item">
-                                    <span class="impact-badge social-badge">SOC</span>
-                                    <div class="impact-content">
-                                        <h5>University Partnerships</h5>
-                                        <div class="impact-value">3 institutions</div>
-                                        <small>Mining engineering programs (UNAM, NUST)</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="col-lg-4">
-                        <div class="dashboard-card">
-                            <div class="card-header" style="background-color: #9b59b6;">
-                                <h3><i class="fas fa-home me-2"></i> Community Development</h3>
-                            </div>
-                            <div class="card-body">
-                                <div class="chart-container-sm">
-                                    <canvas id="communityChart"></canvas>
-                                </div>
-                                <div class="impact-item">
-                                    <span class="impact-badge social-badge">SOC</span>
-                                    <div class="impact-content">
-                                        <h5>CSR Investment</h5>
-                                        <div class="impact-value">$12 million/year</div>
-                                        <small>Health, education, infrastructure (MME, 2023)</small>
-                                    </div>
-                                </div>
-                                <div class="impact-item">
-                                    <span class="impact-badge social-badge">SOC</span>
-                                    <div class="impact-content">
-                                        <h5>Resettlement</h5>
-                                        <div class="impact-value">3 communities</div>
-                                        <small>Since 2010, with compensation (Govt. reports)</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="row mt-4">
-                    <div class="col-lg-12">
-                        <div class="dashboard-card">
-                            <div class="card-header" style="background-color: #8e44ad;">
-                                <h3><i class="fas fa-chart-bar me-2"></i> Social Trends</h3>
-                            </div>
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-lg-8">
-                                        <div class="chart-container">
-                                            <canvas id="socialTrendsChart"></canvas>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <h4>Key Social Indicators</h4>
-                                        <div class="impact-item">
-                                            <span class="impact-badge social-badge">SOC</span>
-                                            <div class="impact-content">
-                                                <h5>Local Procurement</h5>
-                                                <div class="impact-value">65% of spending</div>
-                                                <small>Up from 45% in 2015 (Chamber of Mines)</small>
-                                            </div>
-                                        </div>
-                                        <div class="impact-item">
-                                            <span class="impact-badge social-badge">SOC</span>
-                                            <div class="impact-content">
-                                                <h5>Health Outcomes</h5>
-                                                <div class="impact-value">HIV prevalence 14%</div>
-                                                <small>Down from 22% in 2010 (Ministry of Health)</small>
-                                            </div>
-                                        </div>
-                                        <div class="impact-item">
-                                            <span class="impact-badge social-badge">SOC</span>
-                                            <div class="impact-content">
-                                                <h5>Safety Record</h5>
-                                                <div class="impact-value">0.8 LTIFR</div>
-                                                <small>Lost Time Injury Frequency Rate (2023)</small>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Economic Impact Section -->
-            <div class="impact-section">
-                <h2><i class="fas fa-chart-pie me-2"></i> Economic Impact</h2>
-                <div class="row">
-                    <div class="col-lg-4">
-                        <div class="dashboard-card">
-                            <div class="card-header" style="background-color: #e67e22;">
-                                <h3><i class="fas fa-money-bill-wave me-2"></i> Fiscal Contribution</h3>
-                            </div>
-                            <div class="card-body">
-                                <div class="chart-container-sm">
-                                    <canvas id="fiscalChart"></canvas>
-                                </div>
-                                <div class="impact-item">
-                                    <span class="impact-badge economic-badge">ECO</span>
-                                    <div class="impact-content">
-                                        <h5>Government Revenue</h5>
-                                        <div class="impact-value">$180 million/year</div>
-                                        <small>Taxes, royalties, dividends (Bank of Namibia, 2023)</small>
-                                    </div>
-                                </div>
-                                <div class="impact-item">
-                                    <span class="impact-badge economic-badge">ECO</span>
-                                    <div class="impact-content">
-                                        <h5>Export Earnings</h5>
-                                        <div class="impact-value">12% of total</div>
-                                        <small>Namibia's export earnings (NSA, 2023)</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="col-lg-4">
-                        <div class="dashboard-card">
-                            <div class="card-header" style="background-color: #d35400;">
-                                <h3><i class="fas fa-network-wired me-2"></i> Economic Multipliers</h3>
-                            </div>
-                            <div class="card-body">
-                                <div class="chart-container-sm">
-                                    <canvas id="multiplierChart"></canvas>
-                                </div>
-                                <div class="impact-item">
-                                    <span class="impact-badge economic-badge">ECO</span>
-                                    <div class="impact-content">
-                                        <h5>GDP Contribution</h5>
-                                        <div class="impact-value">5% of GDP</div>
-                                        <small>Direct and indirect impacts (NSA, 2023)</small>
-                                    </div>
-                                </div>
-                                <div class="impact-item">
-                                    <span class="impact-badge economic-badge">ECO</span>
-                                    <div class="impact-content">
-                                        <h5>Employment Multiplier</h5>
-                                        <div class="impact-value">2.5x</div>
-                                        <small>Indirect jobs per direct job (UN Study, 2022)</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="col-lg-4">
-                        <div class="dashboard-card">
-                            <div class="card-header" style="background-color: #f39c12;">
-                                <h3><i class="fas fa-lightbulb me-2"></i> Innovation & Diversification</h3>
-                            </div>
-                            <div class="card-body">
-                                <div class="chart-container-sm">
-                                    <canvas id="innovationChart"></canvas>
-                                </div>
-                                <div class="impact-item">
-                                    <span class="impact-badge economic-badge">ECO</span>
-                                    <div class="impact-content">
-                                        <h5>Renewable Energy</h5>
-                                        <div class="impact-value">40 MW solar</div>
-                                        <small>Capacity at mining operations (Rössing, 2023)</small>
-                                    </div>
-                                </div>
-                                <div class="impact-item">
-                                    <span class="impact-badge economic-badge">ECO</span>
-                                    <div class="impact-content">
-                                        <h5>Downstream Potential</h5>
-                                        <div class="impact-value">$300 million</div>
-                                        <small>Value addition opportunity (MME Study)</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="row mt-4">
-                    <div class="col-lg-12">
-                        <div class="dashboard-card">
-                            <div class="card-header" style="background-color: #e74c3c;">
-                                <h3><i class="fas fa-chart-line me-2"></i> Economic Trends</h3>
-                            </div>
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-lg-8">
-                                        <div class="chart-container">
-                                            <canvas id="economicTrendsChart"></canvas>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <h4>Key Economic Indicators</h4>
-                                        <div class="impact-item">
-                                            <span class="impact-badge economic-badge">ECO</span>
-                                            <div class="impact-content">
-                                                <h5>Price Volatility</h5>
-                                                <div class="impact-value">$30-$130/lb</div>
-                                                <small>Uranium price range since 2000 (WNA)</small>
-                                            </div>
-                                        </div>
-                                        <div class="impact-item">
-                                            <span class="impact-badge economic-badge">ECO</span>
-                                            <div class="impact-content">
-                                                <h5>Investment Inflow</h5>
-                                                <div class="impact-value">$6 billion</div>
-                                                <small>Since 2006 (Bank of Namibia)</small>
-                                            </div>
-                                        </div>
-                                        <div class="impact-item">
-                                            <span class="impact-badge economic-badge">ECO</span>
-                                            <div class="impact-content">
-                                                <h5>Local Content</h5>
-                                                <div class="impact-value">58% of procurement</div>
-                                                <small>Up from 35% in 2010 (MME)</small>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Integrated Impact Assessment -->
-            <div class="row mt-4">
-                <div class="col-lg-12">
-                    <div class="dashboard-card">
-                        <div class="card-header" style="background-color: #2c3e50;">
-                            <h3><i class="fas fa-balance-scale me-2"></i> Integrated Impact Assessment</h3>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <h5>Sustainability Trade-offs</h5>
-                                    <p>The uranium sector presents complex interactions between environmental, social, and economic dimensions:</p>
-                                    
-                                    <div class="impact-item">
-                                        <span class="impact-badge environment-badge">ENV</span>
-                                        <span class="impact-badge social-badge">SOC</span>
-                                        <div class="impact-content">
-                                            <h5>Water vs. Employment</h5>
-                                            <p>While mines are major water users, they provide critical employment in arid regions with few alternatives.</p>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="impact-item">
-                                        <span class="impact-badge economic-badge">ECO</span>
-                                        <span class="impact-badge social-badge">SOC</span>
-                                        <div class="impact-content">
-                                            <h5>Revenue vs. Displacement</h5>
-                                            <p>Government revenues fund development, but some communities face resettlement impacts.</p>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="impact-item">
-                                        <span class="impact-badge environment-badge">ENV</span>
-                                        <span class="impact-badge economic-badge">ECO</span>
-                                        <div class="impact-content">
-                                            <h5>Renewables Investment</h5>
-                                            <p>Mines investing in solar reduce carbon footprint while creating local energy jobs.</p>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="alert alert-info mt-3">
-                                        <i class="fas fa-info-circle me-2"></i>
-                                        Namibia's Strategic Environmental Management Plan (SEMP) attempts to balance these trade-offs through comprehensive monitoring.
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="chart-container">
-                                        <canvas id="integratedChart"></canvas>
-                                    </div>
-                                    <div class="mt-3">
-                                        <h5>Future Challenges</h5>
-                                        <ul class="styled-list">
-                                            <li><strong>Climate change:</strong> Increased water stress in the Erongo region</li>
-                                            <li><strong>Market volatility:</strong> Dependence on uranium prices</li>
-                                            <li><strong>Legacy management:</strong> Long-term stewardship of tailings facilities</li>
-                                            <li><strong>Energy transition:</strong> Role of nuclear in decarbonization</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
+
+        <!-- Environmental Impact Section -->
+        <div class="impact-section">
+          <h2><i class="fas fa-leaf me-2"></i> Environmental Impact</h2>
+          <div class="row">
+            <div class="col-lg-4">
+              <div class="dashboard-card">
+                <div class="card-header" style="background-color: #27ae60">
+                  <h3><i class="fas fa-tint me-2"></i> Water Management</h3>
+                </div>
+                <div class="card-body">
+                  <div class="chart-container-sm">
+                    <canvas id="waterChart"></canvas>
+                  </div>
+                  <div class="impact-item">
+                    <div class="impact-icon" style="color: #27ae60">
+                      <i class="fas fa-industry"></i>
+                    </div>
+                    <div class="impact-content">
+                      <h5>Desalination Plants</h5>
+                      <div class="impact-value">$450 million investment</div>
+                      <small
+                        >Two major plants for mining operations (Namibia Water
+                        Corporation, 2023)</small
+                      >
+                    </div>
+                  </div>
+                  <div class="impact-item">
+                    <div class="impact-icon" style="color: #27ae60">
+                      <i class="fas fa-recycle"></i>
+                    </div>
+                    <div class="impact-content">
+                      <h5>Water Recycling</h5>
+                      <div class="impact-value">80% average</div>
+                      <small
+                        >Across major operations (Ministry of Mines and Energy,
+                        2022)</small
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-4">
+              <div class="dashboard-card">
+                <div class="card-header" style="background-color: #16a085">
+                  <h3>
+                    <i class="fas fa-radiation me-2"></i> Radiation & Waste
+                  </h3>
+                </div>
+                <div class="card-body">
+                  <div class="chart-container-sm">
+                    <canvas id="radiationChart"></canvas>
+                  </div>
+                  <div class="impact-item">
+                    <div class="impact-icon" style="color: #16a085">
+                      <i class="fas fa-hard-hat"></i>
+                    </div>
+                    <div class="impact-content">
+                      <h5>Worker Safety</h5>
+                      <div class="impact-value">
+                        <span class="radiation-level safe">4.8 mSv/year</span>
+                        average
+                      </div>
+                      <small>Below 20 mSv/year limit (IAEA standards)</small>
+                    </div>
+                  </div>
+                  <div class="impact-item">
+                    <div class="impact-icon" style="color: #16a085">
+                      <i class="fas fa-trash-alt"></i>
+                    </div>
+                    <div class="impact-content">
+                      <h5>Tailings Management</h5>
+                      <div class="impact-value">30 million tons/year</div>
+                      <small
+                        >Engineered facilities with monitoring (ERM Report,
+                        2023)</small
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-4">
+              <div class="dashboard-card">
+                <div class="card-header" style="background-color: #2ecc71">
+                  <h3><i class="fas fa-paw me-2"></i> Biodiversity</h3>
+                </div>
+                <div class="card-body">
+                  <div class="chart-container-sm">
+                    <canvas id="biodiversityChart"></canvas>
+                  </div>
+                  <div class="impact-item">
+                    <div class="impact-icon" style="color: #2ecc71">
+                      <i class="fas fa-tree"></i>
+                    </div>
+                    <div class="impact-content">
+                      <h5>Land Rehabilitation</h5>
+                      <div class="impact-value">650 hectares</div>
+                      <small
+                        >Revegetated since 2010 (Ministry of Environment,
+                        2023)</small
+                      >
+                    </div>
+                  </div>
+                  <div class="impact-item">
+                    <div class="impact-icon" style="color: #2ecc71">
+                      <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="impact-content">
+                      <h5>Sensitive Areas</h5>
+                      <div class="impact-value">3 protected areas</div>
+                      <small
+                        >Within 50km of mining operations (Namibia Chamber of
+                        Environment)</small
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt-4">
+            <div class="col-lg-12">
+              <div class="dashboard-card">
+                <div class="card-header" style="background-color: #3498db">
+                  <h3>
+                    <i class="fas fa-chart-line me-2"></i> Environmental Trends
+                  </h3>
+                </div>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-lg-8">
+                      <div class="chart-container">
+                        <canvas id="envTrendsChart"></canvas>
+                      </div>
+                    </div>
+                    <div class="col-lg-4">
+                      <h4>Key Environmental Indicators</h4>
+                      <div class="impact-item">
+                        <span class="impact-badge environment-badge">ENV</span>
+                        <div class="impact-content">
+                          <h5>Carbon Footprint</h5>
+                          <div class="impact-value">0.12 kg CO₂e/kWh</div>
+                          <small
+                            >Compared to 0.45 kg for coal (WNA, 2023)</small
+                          >
+                        </div>
+                      </div>
+                      <div class="impact-item">
+                        <span class="impact-badge environment-badge">ENV</span>
+                        <div class="impact-content">
+                          <h5>Water Use Efficiency</h5>
+                          <div class="impact-value">+25% since 2015</div>
+                          <small>Improved recycling technologies</small>
+                        </div>
+                      </div>
+                      <div class="impact-item">
+                        <span class="impact-badge environment-badge">ENV</span>
+                        <div class="impact-content">
+                          <h5>Radiation Reduction</h5>
+                          <div class="impact-value">-40% since 2010</div>
+                          <small>Improved shielding and practices</small>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Social Impact Section -->
+        <div class="impact-section">
+          <h2><i class="fas fa-users me-2"></i> Social Impact</h2>
+          <div class="row">
+            <div class="col-lg-4">
+              <div class="dashboard-card">
+                <div class="card-header" style="background-color: #3498db">
+                  <h3><i class="fas fa-briefcase me-2"></i> Employment</h3>
+                </div>
+                <div class="card-body">
+                  <div class="chart-container-sm">
+                    <canvas id="employmentChart"></canvas>
+                  </div>
+                  <div class="impact-item">
+                    <span class="impact-badge social-badge">SOC</span>
+                    <div class="impact-content">
+                      <h5>Direct Employment</h5>
+                      <div class="impact-value">6,200 jobs</div>
+                      <small
+                        >90% Namibian citizens (Chamber of Mines, 2023)</small
+                      >
+                    </div>
+                  </div>
+                  <div class="impact-item">
+                    <span class="impact-badge social-badge">SOC</span>
+                    <div class="impact-content">
+                      <h5>Gender Representation</h5>
+                      <div class="impact-value">27% female</div>
+                      <small
+                        >Up from 18% in 2015 (Rössing Sustainability
+                        Report)</small
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-4">
+              <div class="dashboard-card">
+                <div class="card-header" style="background-color: #2980b9">
+                  <h3>
+                    <i class="fas fa-graduation-cap me-2"></i> Education &
+                    Skills
+                  </h3>
+                </div>
+                <div class="card-body">
+                  <div class="chart-container-sm">
+                    <canvas id="educationChart"></canvas>
+                  </div>
+                  <div class="impact-item">
+                    <span class="impact-badge social-badge">SOC</span>
+                    <div class="impact-content">
+                      <h5>Training Investment</h5>
+                      <div class="impact-value">$8.5 million/year</div>
+                      <small
+                        >Across major operations (Husab Report, 2023)</small
+                      >
+                    </div>
+                  </div>
+                  <div class="impact-item">
+                    <span class="impact-badge social-badge">SOC</span>
+                    <div class="impact-content">
+                      <h5>University Partnerships</h5>
+                      <div class="impact-value">3 institutions</div>
+                      <small>Mining engineering programs (UNAM, NUST)</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-4">
+              <div class="dashboard-card">
+                <div class="card-header" style="background-color: #9b59b6">
+                  <h3>
+                    <i class="fas fa-home me-2"></i> Community Development
+                  </h3>
+                </div>
+                <div class="card-body">
+                  <div class="chart-container-sm">
+                    <canvas id="communityChart"></canvas>
+                  </div>
+                  <div class="impact-item">
+                    <span class="impact-badge social-badge">SOC</span>
+                    <div class="impact-content">
+                      <h5>CSR Investment</h5>
+                      <div class="impact-value">$12 million/year</div>
+                      <small
+                        >Health, education, infrastructure (MME, 2023)</small
+                      >
+                    </div>
+                  </div>
+                  <div class="impact-item">
+                    <span class="impact-badge social-badge">SOC</span>
+                    <div class="impact-content">
+                      <h5>Resettlement</h5>
+                      <div class="impact-value">3 communities</div>
+                      <small
+                        >Since 2010, with compensation (Govt. reports)</small
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt-4">
+            <div class="col-lg-12">
+              <div class="dashboard-card">
+                <div class="card-header" style="background-color: #8e44ad">
+                  <h3><i class="fas fa-chart-bar me-2"></i> Social Trends</h3>
+                </div>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-lg-8">
+                      <div class="chart-container">
+                        <canvas id="socialTrendsChart"></canvas>
+                      </div>
+                    </div>
+                    <div class="col-lg-4">
+                      <h4>Key Social Indicators</h4>
+                      <div class="impact-item">
+                        <span class="impact-badge social-badge">SOC</span>
+                        <div class="impact-content">
+                          <h5>Local Procurement</h5>
+                          <div class="impact-value">65% of spending</div>
+                          <small>Up from 45% in 2015 (Chamber of Mines)</small>
+                        </div>
+                      </div>
+                      <div class="impact-item">
+                        <span class="impact-badge social-badge">SOC</span>
+                        <div class="impact-content">
+                          <h5>Health Outcomes</h5>
+                          <div class="impact-value">HIV prevalence 14%</div>
+                          <small
+                            >Down from 22% in 2010 (Ministry of Health)</small
+                          >
+                        </div>
+                      </div>
+                      <div class="impact-item">
+                        <span class="impact-badge social-badge">SOC</span>
+                        <div class="impact-content">
+                          <h5>Safety Record</h5>
+                          <div class="impact-value">0.8 LTIFR</div>
+                          <small>Lost Time Injury Frequency Rate (2023)</small>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Economic Impact Section -->
+        <div class="impact-section">
+          <h2><i class="fas fa-chart-pie me-2"></i> Economic Impact</h2>
+          <div class="row">
+            <div class="col-lg-4">
+              <div class="dashboard-card">
+                <div class="card-header" style="background-color: #e67e22">
+                  <h3>
+                    <i class="fas fa-money-bill-wave me-2"></i> Fiscal
+                    Contribution
+                  </h3>
+                </div>
+                <div class="card-body">
+                  <div class="chart-container-sm">
+                    <canvas id="fiscalChart"></canvas>
+                  </div>
+                  <div class="impact-item">
+                    <span class="impact-badge economic-badge">ECO</span>
+                    <div class="impact-content">
+                      <h5>Government Revenue</h5>
+                      <div class="impact-value">$180 million/year</div>
+                      <small
+                        >Taxes, royalties, dividends (Bank of Namibia,
+                        2023)</small
+                      >
+                    </div>
+                  </div>
+                  <div class="impact-item">
+                    <span class="impact-badge economic-badge">ECO</span>
+                    <div class="impact-content">
+                      <h5>Export Earnings</h5>
+                      <div class="impact-value">12% of total</div>
+                      <small>Namibia's export earnings (NSA, 2023)</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-4">
+              <div class="dashboard-card">
+                <div class="card-header" style="background-color: #d35400">
+                  <h3>
+                    <i class="fas fa-network-wired me-2"></i> Economic
+                    Multipliers
+                  </h3>
+                </div>
+                <div class="card-body">
+                  <div class="chart-container-sm">
+                    <canvas id="multiplierChart"></canvas>
+                  </div>
+                  <div class="impact-item">
+                    <span class="impact-badge economic-badge">ECO</span>
+                    <div class="impact-content">
+                      <h5>GDP Contribution</h5>
+                      <div class="impact-value">5% of GDP</div>
+                      <small>Direct and indirect impacts (NSA, 2023)</small>
+                    </div>
+                  </div>
+                  <div class="impact-item">
+                    <span class="impact-badge economic-badge">ECO</span>
+                    <div class="impact-content">
+                      <h5>Employment Multiplier</h5>
+                      <div class="impact-value">2.5x</div>
+                      <small
+                        >Indirect jobs per direct job (UN Study, 2022)</small
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-4">
+              <div class="dashboard-card">
+                <div class="card-header" style="background-color: #f39c12">
+                  <h3>
+                    <i class="fas fa-lightbulb me-2"></i> Innovation &
+                    Diversification
+                  </h3>
+                </div>
+                <div class="card-body">
+                  <div class="chart-container-sm">
+                    <canvas id="innovationChart"></canvas>
+                  </div>
+                  <div class="impact-item">
+                    <span class="impact-badge economic-badge">ECO</span>
+                    <div class="impact-content">
+                      <h5>Renewable Energy</h5>
+                      <div class="impact-value">40 MW solar</div>
+                      <small
+                        >Capacity at mining operations (Rössing, 2023)</small
+                      >
+                    </div>
+                  </div>
+                  <div class="impact-item">
+                    <span class="impact-badge economic-badge">ECO</span>
+                    <div class="impact-content">
+                      <h5>Downstream Potential</h5>
+                      <div class="impact-value">$300 million</div>
+                      <small>Value addition opportunity (MME Study)</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt-4">
+            <div class="col-lg-12">
+              <div class="dashboard-card">
+                <div class="card-header" style="background-color: #e74c3c">
+                  <h3>
+                    <i class="fas fa-chart-line me-2"></i> Economic Trends
+                  </h3>
+                </div>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-lg-8">
+                      <div class="chart-container">
+                        <canvas id="economicTrendsChart"></canvas>
+                      </div>
+                    </div>
+                    <div class="col-lg-4">
+                      <h4>Key Economic Indicators</h4>
+                      <div class="impact-item">
+                        <span class="impact-badge economic-badge">ECO</span>
+                        <div class="impact-content">
+                          <h5>Price Volatility</h5>
+                          <div class="impact-value">$30-$130/lb</div>
+                          <small>Uranium price range since 2000 (WNA)</small>
+                        </div>
+                      </div>
+                      <div class="impact-item">
+                        <span class="impact-badge economic-badge">ECO</span>
+                        <div class="impact-content">
+                          <h5>Investment Inflow</h5>
+                          <div class="impact-value">$6 billion</div>
+                          <small>Since 2006 (Bank of Namibia)</small>
+                        </div>
+                      </div>
+                      <div class="impact-item">
+                        <span class="impact-badge economic-badge">ECO</span>
+                        <div class="impact-content">
+                          <h5>Local Content</h5>
+                          <div class="impact-value">58% of procurement</div>
+                          <small>Up from 35% in 2010 (MME)</small>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Integrated Impact Assessment -->
+        <div class="row mt-4">
+          <div class="col-lg-12">
+            <div class="dashboard-card">
+              <div class="card-header" style="background-color: #2c3e50">
+                <h3>
+                  <i class="fas fa-balance-scale me-2"></i> Integrated Impact
+                  Assessment
+                </h3>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-lg-6">
+                    <h5>Sustainability Trade-offs</h5>
+                    <p>
+                      The uranium sector presents complex interactions between
+                      environmental, social, and economic dimensions:
+                    </p>
+
+                    <div class="impact-item">
+                      <span class="impact-badge environment-badge">ENV</span>
+                      <span class="impact-badge social-badge">SOC</span>
+                      <div class="impact-content">
+                        <h5>Water vs. Employment</h5>
+                        <p>
+                          While mines are major water users, they provide
+                          critical employment in arid regions with few
+                          alternatives.
+                        </p>
+                      </div>
+                    </div>
+
+                    <div class="impact-item">
+                      <span class="impact-badge economic-badge">ECO</span>
+                      <span class="impact-badge social-badge">SOC</span>
+                      <div class="impact-content">
+                        <h5>Revenue vs. Displacement</h5>
+                        <p>
+                          Government revenues fund development, but some
+                          communities face resettlement impacts.
+                        </p>
+                      </div>
+                    </div>
+
+                    <div class="impact-item">
+                      <span class="impact-badge environment-badge">ENV</span>
+                      <span class="impact-badge economic-badge">ECO</span>
+                      <div class="impact-content">
+                        <h5>Renewables Investment</h5>
+                        <p>
+                          Mines investing in solar reduce carbon footprint while
+                          creating local energy jobs.
+                        </p>
+                      </div>
+                    </div>
+
+                    <div class="alert alert-info mt-3">
+                      <i class="fas fa-info-circle me-2"></i>
+                      Namibia's Strategic Environmental Management Plan (SEMP)
+                      attempts to balance these trade-offs through comprehensive
+                      monitoring.
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="chart-container">
+                      <canvas id="integratedChart"></canvas>
+                    </div>
+                    <div class="mt-3">
+                      <h5>Future Challenges</h5>
+                      <ul class="styled-list">
+                        <li>
+                          <strong>Climate change:</strong> Increased water
+                          stress in the Erongo region
+                        </li>
+                        <li>
+                          <strong>Market volatility:</strong> Dependence on
+                          uranium prices
+                        </li>
+                        <li>
+                          <strong>Legacy management:</strong> Long-term
+                          stewardship of tailings facilities
+                        </li>
+                        <li>
+                          <strong>Energy transition:</strong> Role of nuclear in
+                          decarbonization
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- Footer -->
     <footer class="footer py-5">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4 mb-4 mb-lg-0">
-                    <h5>Namibia Uranium Resource Hub</h5>
-                    <p>An educational resource developed for the Global HackAthon Namibia 2025, providing comprehensive information about Namibia's uranium geology, mining methods, environmental impact, and regulatory framework.</p>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-linkedin"></i></a>
-                        <a href="#"><i class="fab fa-github"></i></a>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-md-6 mb-4 mb-md-0">
-                    <h5>Resources</h5>
-                    <ul class="footer-links">
-                        <li><a href="map.html">Uranium Map</a></li>
-                        <li><a href="methods.html">Mining Methods</a></li>
-                        <li><a href="environment.html">Comprehensive Impact</a></li>
-                        <li><a href="policy.html">Policy & Safety</a></li>
-                        <li><a href="quiz.html">Educational Quiz</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-                    <h5>References</h5>
-                    <ul class="footer-links">
-                        <li><a href="https://world-nuclear.org" target="_blank">World Nuclear Association</a></li>
-                        <li><a href="https://www.rossing.com" target="_blank">Rössing Uranium</a></li>
-                        <li><a href="https://www.mme.gov.na" target="_blank">Namibia MME</a></li>
-                        <li><a href="https://www.unesco.org" target="_blank">UNESCO Reports</a></li>
-                        <li><a href="https://www.nsa.org.na" target="_blank">Namibia Statistics Agency</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <h5>Contact</h5>
-                    <ul class="footer-links">
-                        <li><i class="fas fa-envelope me-2"></i> ewaldineeises05@gmail.com</li>
-                        <li><i class="fas fa-map-marker-alt me-2"></i> Otjomuise, Windhoek</li>
-                    </ul>
-                </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-4 mb-4 mb-lg-0">
+            <h5>Namibia Uranium Resource Hub</h5>
+            <p>
+              An educational resource developed for the Global HackAthon Namibia
+              2025, providing comprehensive information about Namibia's uranium
+              geology, mining methods, environmental impact, and regulatory
+              framework.
+            </p>
+            <div class="social-links">
+              <a href="#"><i class="fab fa-twitter"></i></a>
+              <a href="#"><i class="fab fa-linkedin"></i></a>
+              <a href="#"><i class="fab fa-github"></i></a>
             </div>
-            <hr class="mt-4 mb-4">
-            <div class="row">
-                <div class="col-md-6 text-center text-md-start">
-                    <p class="mb-0">&copy; 2025 Global HackAthon Namibia. All rights reserved.</p>
-                </div>
-                <div class="col-md-6 text-center text-md-end">
-                    <p class="mb-0">Developed by Team Uranium Explorers</p>
-                </div>
-            </div>
+          </div>
+          <div class="col-lg-2 col-md-6 mb-4 mb-md-0">
+            <h5>Resources</h5>
+            <ul class="footer-links">
+              <li><a href="map.html">Uranium Map</a></li>
+              <li><a href="methods.html">Mining Methods</a></li>
+              <li><a href="environment.html">Comprehensive Impact</a></li>
+              <li><a href="policy.html">Policy & Safety</a></li>
+              <li><a href="quiz.html">Educational Quiz</a></li>
+            </ul>
+          </div>
+          <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+            <h5>References</h5>
+            <ul class="footer-links">
+              <li>
+                <a href="https://world-nuclear.org" target="_blank"
+                  >World Nuclear Association</a
+                >
+              </li>
+              <li>
+                <a href="https://www.rossing.com" target="_blank"
+                  >Rössing Uranium</a
+                >
+              </li>
+              <li>
+                <a href="https://www.mme.gov.na" target="_blank">Namibia MME</a>
+              </li>
+              <li>
+                <a href="https://www.unesco.org" target="_blank"
+                  >UNESCO Reports</a
+                >
+              </li>
+              <li>
+                <a href="https://www.nsa.org.na" target="_blank"
+                  >Namibia Statistics Agency</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="col-lg-3 col-md-6">
+            <h5>Contact</h5>
+            <ul class="footer-links">
+              <li>
+                <i class="fas fa-envelope me-2"></i> ewaldineeises05@gmail.com
+              </li>
+              <li>
+                <i class="fas fa-map-marker-alt me-2"></i> Otjomuise, Windhoek
+              </li>
+            </ul>
+          </div>
         </div>
+        <hr class="mt-4 mb-4" />
+        <div class="row">
+          <div class="col-md-6 text-center text-md-start">
+            <p class="mb-0">
+              &copy; 2025 Global HackAthon Namibia. All rights reserved.
+            </p>
+          </div>
+          <div class="col-md-6 text-center text-md-end">
+            <p class="mb-0">Developed by Team Uranium Explorers</p>
+          </div>
+        </div>
+      </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Environmental Charts
-            const waterCtx = document.getElementById('waterChart').getContext('2d');
-            const waterChart = new Chart(waterCtx, {
-                type: 'doughnut',
-                data: {
-                    labels: ['Mining Operations', 'Desalination', 'Recycled Water'],
-                    datasets: [{
-                        data: [7, 2, 8],
-                        backgroundColor: [
-                            '#27ae60',
-                            '#16a085',
-                            '#2ecc71'
-                        ],
-                        borderWidth: 0
-                    }]
+      document.addEventListener("DOMContentLoaded", function () {
+        // Environmental Charts
+        const waterCtx = document.getElementById("waterChart").getContext("2d");
+        const waterChart = new Chart(waterCtx, {
+          type: "doughnut",
+          data: {
+            labels: ["Mining Operations", "Desalination", "Recycled Water"],
+            datasets: [
+              {
+                data: [7, 2, 8],
+                backgroundColor: ["#27ae60", "#16a085", "#2ecc71"],
+                borderWidth: 0,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: {
+                position: "bottom",
+              },
+              title: {
+                display: true,
+                text: "Water Sources (million m³/year)",
+                font: {
+                  size: 14,
                 },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: {
-                            position: 'bottom',
-                        },
-                        title: {
-                            display: true,
-                            text: 'Water Sources (million m³/year)',
-                            font: {
-                                size: 14
-                            }
-                        }
-                    },
-                    cutout: '70%'
-                }
-            });
-            
-            const radiationCtx = document.getElementById('radiationChart').getContext('2d');
-            const radiationChart = new Chart(radiationCtx, {
-                type: 'bar',
-                data: {
-                    labels: ['Workers', 'Public', 'Natural Background', 'Regulatory Limit'],
-                    datasets: [{
-                        label: 'Radiation Exposure (mSv/year)',
-                        data: [4.8, 0.1, 2.4, 20],
-                        backgroundColor: [
-                            'rgba(39, 174, 96, 0.7)',
-                            'rgba(52, 152, 219, 0.7)',
-                            'rgba(155, 89, 182, 0.7)',
-                            'rgba(231, 76, 60, 0.3)'
-                        ],
-                        borderColor: [
-                            'rgba(39, 174, 96, 1)',
-                            'rgba(52, 152, 219, 1)',
-                            'rgba(155, 89, 182, 1)',
-                            'rgba(231, 76, 60, 1)'
-                        ],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            title: {
-                                display: true,
-                                text: 'mSv/year'
-                            }
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            display: false
-                        },
-                        title: {
-                            display: true,
-                            text: 'Radiation Exposure Comparison',
-                            font: {
-                                size: 14
-                            }
-                        }
-                    }
-                }
-            });
-            
-            const biodiversityCtx = document.getElementById('biodiversityChart').getContext('2d');
-            const biodiversityChart = new Chart(biodiversityCtx, {
-                type: 'polarArea',
-                data: {
-                    labels: ['Rehabilitated Land', 'Protected Areas', 'Endemic Species', 'Monitoring Programs'],
-                    datasets: [{
-                        data: [650, 3, 12, 8],
-                        backgroundColor: [
-                            'rgba(46, 204, 113, 0.7)',
-                            'rgba(52, 152, 219, 0.7)',
-                            'rgba(155, 89, 182, 0.7)',
-                            'rgba(241, 196, 15, 0.7)'
-                        ],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: {
-                            position: 'bottom',
-                        },
-                        title: {
-                            display: true,
-                            text: 'Biodiversity Indicators',
-                            font: {
-                                size: 14
-                            }
-                        }
-                    }
-                }
-            });
-            
-            const envTrendsCtx = document.getElementById('envTrendsChart').getContext('2d');
-            const envTrendsChart = new Chart(envTrendsCtx, {
-                type: 'line',
-                data: {
-                    labels: ['2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023'],
-                    datasets: [
-                        {
-                            label: 'Water Use Efficiency (m³/tU)',
-                            data: [12, 11.5, 11, 10.5, 10, 9.8, 9.5, 9.3, 9],
-                            borderColor: '#27ae60',
-                            backgroundColor: 'rgba(39, 174, 96, 0.1)',
-                            borderWidth: 3,
-                            tension: 0.3,
-                            fill: true
-                        },
-                        {
-                            label: 'Worker Radiation (mSv)',
-                            data: [7.5, 7.2, 6.8, 6.5, 6.2, 6, 5.8, 5.5, 4.8],
-                            borderColor: '#16a085',
-                            backgroundColor: 'rgba(22, 160, 133, 0.1)',
-                            borderWidth: 3,
-                            tension: 0.3,
-                            fill: true
-                        },
-                        {
-                            label: 'Tailings Recycling (%)',
-                            data: [60, 62, 65, 68, 70, 72, 74, 76, 80],
-                            borderColor: '#2ecc71',
-                            backgroundColor: 'rgba(46, 204, 113, 0.1)',
-                            borderWidth: 3,
-                            tension: 0.3,
-                            fill: true
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        title: {
-                            display: true,
-                            text: 'Environmental Performance Trends (2015-2023)',
-                            font: {
-                                size: 16,
-                                weight: 'bold'
-                            }
-                        },
-                        tooltip: {
-                            mode: 'index',
-                            intersect: false,
-                        },
-                        legend: {
-                            position: 'bottom',
-                            labels: {
-                                usePointStyle: true,
-                                padding: 20
-                            }
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: false
-                        }
-                    },
-                    animation: {
-                        duration: 2000,
-                        easing: 'easeOutQuart'
-                    }
-                }
-            });
-            
-            // Social Charts
-            const employmentCtx = document.getElementById('employmentChart').getContext('2d');
-            const employmentChart = new Chart(employmentCtx, {
-                type: 'bar',
-                data: {
-                    labels: ['Direct Jobs', 'Indirect Jobs', 'Contractors', 'Female Workers'],
-                    datasets: [{
-                        label: 'Employment',
-                        data: [6200, 15500, 3200, 1674],
-                        backgroundColor: [
-                            'rgba(52, 152, 219, 0.7)',
-                            'rgba(41, 128, 185, 0.7)',
-                            'rgba(155, 89, 182, 0.7)',
-                            'rgba(142, 68, 173, 0.7)'
-                        ],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: {
-                            display: false
-                        },
-                        title: {
-                            display: true,
-                            text: 'Employment Impact (2023)',
-                            font: {
-                                size: 14
-                            }
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    }
-                }
-            });
-            
-            const educationCtx = document.getElementById('educationChart').getContext('2d');
-            const educationChart = new Chart(educationCtx, {
-                type: 'doughnut',
-                data: {
-                    labels: ['Vocational Training', 'University Scholarships', 'STEM Programs', 'Community Education'],
-                    datasets: [{
-                        data: [45, 30, 15, 10],
-                        backgroundColor: [
-                            '#3498db',
-                            '#2980b9',
-                            '#9b59b6',
-                            '#8e44ad'
-                        ],
-                        borderWidth: 0
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: {
-                            position: 'bottom',
-                        },
-                        title: {
-                            display: true,
-                            text: 'Education Investment Allocation (%)',
-                            font: {
-                                size: 14
-                            }
-                        }
-                    },
-                    cutout: '70%'
-                }
-            });
-            
-            const communityCtx = document.getElementById('communityChart').getContext('2d');
-            const communityChart = new Chart(communityCtx, {
-                type: 'radar',
-                data: {
-                    labels: ['Healthcare', 'Education', 'Infrastructure', 'Housing', 'Cultural'],
-                    datasets: [
-                        {
-                            label: 'Rössing CSR',
-                            data: [85, 90, 75, 60, 40],
-                            backgroundColor: 'rgba(52, 152, 219, 0.2)',
-                            borderColor: 'rgba(52, 152, 219, 1)',
-                            borderWidth: 2
-                        },
-                        {
-                            label: 'Husab CSR',
-                            data: [80, 85, 80, 65, 45],
-                            backgroundColor: 'rgba(155, 89, 182, 0.2)',
-                            borderColor: 'rgba(155, 89, 182, 1)',
-                            borderWidth: 2
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        title: {
-                            display: true,
-                            text: 'Community Investment Focus Areas',
-                            font: {
-                                size: 14
-                            }
-                        }
-                    },
-                    scales: {
-                        r: {
-                            angleLines: {
-                                display: true
-                            },
-                            suggestedMin: 0,
-                            suggestedMax: 100
-                        }
-                    }
-                }
-            });
-            
-            const socialTrendsCtx = document.getElementById('socialTrendsChart').getContext('2d');
-            const socialTrendsChart = new Chart(socialTrendsCtx, {
-                type: 'line',
-                data: {
-                    labels: ['2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023'],
-                    datasets: [
-                        {
-                            label: 'Local Procurement (%)',
-                            data: [45, 48, 52, 55, 58, 60, 62, 64, 65],
-                            borderColor: '#3498db',
-                            backgroundColor: 'rgba(52, 152, 219, 0.1)',
-                            borderWidth: 3,
-                            tension: 0.3,
-                            fill: true
-                        },
-                        {
-                            label: 'Female Employment (%)',
-                            data: [18, 19, 21, 23, 24, 25, 26, 26.5, 27],
-                            borderColor: '#9b59b6',
-                            backgroundColor: 'rgba(155, 89, 182, 0.1)',
-                            borderWidth: 3,
-                            tension: 0.3,
-                            fill: true
-                        },
-                        {
-                            label: 'Safety (LTIFR)',
-                            data: [1.8, 1.6, 1.4, 1.3, 1.2, 1.1, 1.0, 0.9, 0.8],
-                            borderColor: '#2980b9',
-                            backgroundColor: 'rgba(41, 128, 185, 0.1)',
-                            borderWidth: 3,
-                            tension: 0.3,
-                            fill: true
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        title: {
-                            display: true,
-                            text: 'Social Performance Trends (2015-2023)',
-                            font: {
-                                size: 16,
-                                weight: 'bold'
-                            }
-                        },
-                        tooltip: {
-                            mode: 'index',
-                            intersect: false,
-                        },
-                        legend: {
-                            position: 'bottom',
-                            labels: {
-                                usePointStyle: true,
-                                padding: 20
-                            }
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    },
-                    animation: {
-                        duration: 2000,
-                        easing: 'easeOutQuart'
-                    }
-                }
-            });
-            
-            // Economic Charts
-            const fiscalCtx = document.getElementById('fiscalChart').getContext('2d');
-            const fiscalChart = new Chart(fiscalCtx, {
-                type: 'bar',
-                data: {
-                    labels: ['Taxes', 'Royalties', 'Dividends', 'Fees'],
-                    datasets: [{
-                        label: 'Revenue (million $)',
-                        data: [85, 45, 30, 20],
-                        backgroundColor: [
-                            'rgba(230, 126, 34, 0.7)',
-                            'rgba(211, 84, 0, 0.7)',
-                            'rgba(243, 156, 18, 0.7)',
-                            'rgba(245, 176, 65, 0.7)'
-                        ],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: {
-                            display: false
-                        },
-                        title: {
-                            display: true,
-                            text: 'Government Revenue Composition (2023)',
-                            font: {
-                                size: 14
-                            }
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    }
-                }
-            });
-            
-            const multiplierCtx = document.getElementById('multiplierChart').getContext('2d');
-            const multiplierChart = new Chart(multiplierCtx, {
-                type: 'pie',
-                data: {
-                    labels: ['Direct GDP', 'Indirect GDP', 'Induced GDP'],
-                    datasets: [{
-                        data: [3.2, 1.2, 0.6],
-                        backgroundColor: [
-                            '#e67e22',
-                            '#d35400',
-                            '#f39c12'
-                        ],
-                        borderWidth: 0
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: {
-                            position: 'bottom',
-                        },
-                        title: {
-                            display: true,
-                            text: 'GDP Contribution (% of national GDP)',
-                            font: {
-                                size: 14
-                            }
-                        }
-                    },
-                    cutout: '70%'
-                }
-            });
-            
-            const innovationCtx = document.getElementById('innovationChart').getContext('2d');
-            const innovationChart = new Chart(innovationCtx, {
-                type: 'doughnut',
-                data: {
-                    labels: ['Solar Power', 'Water Tech', 'Automation', 'Rehabilitation'],
-                    datasets: [{
-                        data: [40, 30, 20, 10],
-                        backgroundColor: [
-                            '#f39c12',
-                            '#e67e22',
-                            '#d35400',
-                            '#e74c3c'
-                        ],
-                        borderWidth: 0
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: {
-                            position: 'bottom',
-                        },
-                        title: {
-                            display: true,
-                            text: 'Innovation Investment Allocation (%)',
-                            font: {
-                                size: 14
-                            }
-                        }
-                    },
-                    cutout: '70%'
-                }
-            });
-            
-            const economicTrendsCtx = document.getElementById('economicTrendsChart').getContext('2d');
-            const economicTrendsChart = new Chart(economicTrendsCtx, {
-                type: 'line',
-                data: {
-                    labels: ['2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023'],
-                    datasets: [
-                        {
-                            label: 'Government Revenue ($ million)',
-                            data: [120, 110, 130, 140, 150, 145, 160, 175, 180],
-                            borderColor: '#e67e22',
-                            backgroundColor: 'rgba(230, 126, 34, 0.1)',
-                            borderWidth: 3,
-                            tension: 0.3,
-                            fill: true
-                        },
-                        {
-                            label: 'Export Share (%)',
-                            data: [8, 9, 10, 11, 12, 11.5, 11.8, 11.7, 12],
-                            borderColor: '#d35400',
-                            backgroundColor: 'rgba(211, 84, 0, 0.1)',
-                            borderWidth: 3,
-                            tension: 0.3,
-                            fill: true
-                        },
-                        {
-                            label: 'Local Procurement (%)',
-                            data: [45, 48, 52, 55, 58, 60, 62, 64, 65],
-                            borderColor: '#f39c12',
-                            backgroundColor: 'rgba(243, 156, 18, 0.1)',
-                            borderWidth: 3,
-                            tension: 0.3,
-                            fill: true
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        title: {
-                            display: true,
-                            text: 'Economic Performance Trends (2015-2023)',
-                            font: {
-                                size: 16,
-                                weight: 'bold'
-                            }
-                        },
-                        tooltip: {
-                            mode: 'index',
-                            intersect: false,
-                        },
-                        legend: {
-                            position: 'bottom',
-                            labels: {
-                                usePointStyle: true,
-                                padding: 20
-                            }
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: false
-                        }
-                    },
-                    animation: {
-                        duration: 2000,
-                        easing: 'easeOutQuart'
-                    }
-                }
-            });
-            
-            // Integrated Chart
-            const integratedCtx = document.getElementById('integratedChart').getContext('2d');
-            const integratedChart = new Chart(integratedCtx, {
-                type: 'radar',
-                data: {
-                    labels: ['Water Use', 'Employment', 'Revenue', 'Health', 'Biodiversity', 'Innovation'],
-                    datasets: [
-                        {
-                            label: 'Environmental',
-                            data: [65, 0, 0, 0, 70, 30],
-                            backgroundColor: 'rgba(39, 174, 96, 0.2)',
-                            borderColor: 'rgba(39, 174, 96, 1)',
-                            borderWidth: 2,
-                            pointBackgroundColor: 'rgba(39, 174, 96, 1)'
-                        },
-                        {
-                            label: 'Social',
-                            data: [0, 85, 0, 80, 0, 0],
-                            backgroundColor: 'rgba(52, 152, 219, 0.2)',
-                            borderColor: 'rgba(52, 152, 219, 1)',
-                            borderWidth: 2,
-                            pointBackgroundColor: 'rgba(52, 152, 219, 1)'
-                        },
-                        {
-                            label: 'Economic',
-                            data: [0, 0, 90, 0, 0, 75],
-                            backgroundColor: 'rgba(230, 126, 34, 0.2)',
-                            borderColor: 'rgba(230, 126, 34, 1)',
-                            borderWidth: 2,
-                            pointBackgroundColor: 'rgba(230, 126, 34, 1)'
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        title: {
-                            display: true,
-                            text: 'Integrated Impact Assessment (0-100 scale)',
-                            font: {
-                                size: 16,
-                                weight: 'bold'
-                            }
-                        },
-                        legend: {
-                            position: 'bottom',
-                        }
-                    },
-                    scales: {
-                        r: {
-                            angleLines: {
-                                display: true
-                            },
-                            suggestedMin: 0,
-                            suggestedMax: 100
-                        }
-                    }
-                }
-            });
+              },
+            },
+            cutout: "70%",
+          },
         });
+
+        const radiationCtx = document
+          .getElementById("radiationChart")
+          .getContext("2d");
+        const radiationChart = new Chart(radiationCtx, {
+          type: "bar",
+          data: {
+            labels: [
+              "Workers",
+              "Public",
+              "Natural Background",
+              "Regulatory Limit",
+            ],
+            datasets: [
+              {
+                label: "Radiation Exposure (mSv/year)",
+                data: [4.8, 0.1, 2.4, 20],
+                backgroundColor: [
+                  "rgba(39, 174, 96, 0.7)",
+                  "rgba(52, 152, 219, 0.7)",
+                  "rgba(155, 89, 182, 0.7)",
+                  "rgba(231, 76, 60, 0.3)",
+                ],
+                borderColor: [
+                  "rgba(39, 174, 96, 1)",
+                  "rgba(52, 152, 219, 1)",
+                  "rgba(155, 89, 182, 1)",
+                  "rgba(231, 76, 60, 1)",
+                ],
+                borderWidth: 1,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            scales: {
+              y: {
+                beginAtZero: true,
+                title: {
+                  display: true,
+                  text: "mSv/year",
+                },
+              },
+            },
+            plugins: {
+              legend: {
+                display: false,
+              },
+              title: {
+                display: true,
+                text: "Radiation Exposure Comparison",
+                font: {
+                  size: 14,
+                },
+              },
+            },
+          },
+        });
+
+        const biodiversityCtx = document
+          .getElementById("biodiversityChart")
+          .getContext("2d");
+        const biodiversityChart = new Chart(biodiversityCtx, {
+          type: "polarArea",
+          data: {
+            labels: [
+              "Rehabilitated Land",
+              "Protected Areas",
+              "Endemic Species",
+              "Monitoring Programs",
+            ],
+            datasets: [
+              {
+                data: [650, 3, 12, 8],
+                backgroundColor: [
+                  "rgba(46, 204, 113, 0.7)",
+                  "rgba(52, 152, 219, 0.7)",
+                  "rgba(155, 89, 182, 0.7)",
+                  "rgba(241, 196, 15, 0.7)",
+                ],
+                borderWidth: 1,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: {
+                position: "bottom",
+              },
+              title: {
+                display: true,
+                text: "Biodiversity Indicators",
+                font: {
+                  size: 14,
+                },
+              },
+            },
+          },
+        });
+
+        const envTrendsCtx = document
+          .getElementById("envTrendsChart")
+          .getContext("2d");
+        const envTrendsChart = new Chart(envTrendsCtx, {
+          type: "line",
+          data: {
+            labels: [
+              "2015",
+              "2016",
+              "2017",
+              "2018",
+              "2019",
+              "2020",
+              "2021",
+              "2022",
+              "2023",
+            ],
+            datasets: [
+              {
+                label: "Water Use Efficiency (m³/tU)",
+                data: [12, 11.5, 11, 10.5, 10, 9.8, 9.5, 9.3, 9],
+                borderColor: "#27ae60",
+                backgroundColor: "rgba(39, 174, 96, 0.1)",
+                borderWidth: 3,
+                tension: 0.3,
+                fill: true,
+              },
+              {
+                label: "Worker Radiation (mSv)",
+                data: [7.5, 7.2, 6.8, 6.5, 6.2, 6, 5.8, 5.5, 4.8],
+                borderColor: "#16a085",
+                backgroundColor: "rgba(22, 160, 133, 0.1)",
+                borderWidth: 3,
+                tension: 0.3,
+                fill: true,
+              },
+              {
+                label: "Tailings Recycling (%)",
+                data: [60, 62, 65, 68, 70, 72, 74, 76, 80],
+                borderColor: "#2ecc71",
+                backgroundColor: "rgba(46, 204, 113, 0.1)",
+                borderWidth: 3,
+                tension: 0.3,
+                fill: true,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              title: {
+                display: true,
+                text: "Environmental Performance Trends (2015-2023)",
+                font: {
+                  size: 16,
+                  weight: "bold",
+                },
+              },
+              tooltip: {
+                mode: "index",
+                intersect: false,
+              },
+              legend: {
+                position: "bottom",
+                labels: {
+                  usePointStyle: true,
+                  padding: 20,
+                },
+              },
+            },
+            scales: {
+              y: {
+                beginAtZero: false,
+              },
+            },
+            animation: {
+              duration: 2000,
+              easing: "easeOutQuart",
+            },
+          },
+        });
+
+        // Social Charts
+        const employmentCtx = document
+          .getElementById("employmentChart")
+          .getContext("2d");
+        const employmentChart = new Chart(employmentCtx, {
+          type: "bar",
+          data: {
+            labels: [
+              "Direct Jobs",
+              "Indirect Jobs",
+              "Contractors",
+              "Female Workers",
+            ],
+            datasets: [
+              {
+                label: "Employment",
+                data: [6200, 15500, 3200, 1674],
+                backgroundColor: [
+                  "rgba(52, 152, 219, 0.7)",
+                  "rgba(41, 128, 185, 0.7)",
+                  "rgba(155, 89, 182, 0.7)",
+                  "rgba(142, 68, 173, 0.7)",
+                ],
+                borderWidth: 1,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: {
+                display: false,
+              },
+              title: {
+                display: true,
+                text: "Employment Impact (2023)",
+                font: {
+                  size: 14,
+                },
+              },
+            },
+            scales: {
+              y: {
+                beginAtZero: true,
+              },
+            },
+          },
+        });
+
+        const educationCtx = document
+          .getElementById("educationChart")
+          .getContext("2d");
+        const educationChart = new Chart(educationCtx, {
+          type: "doughnut",
+          data: {
+            labels: [
+              "Vocational Training",
+              "University Scholarships",
+              "STEM Programs",
+              "Community Education",
+            ],
+            datasets: [
+              {
+                data: [45, 30, 15, 10],
+                backgroundColor: ["#3498db", "#2980b9", "#9b59b6", "#8e44ad"],
+                borderWidth: 0,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: {
+                position: "bottom",
+              },
+              title: {
+                display: true,
+                text: "Education Investment Allocation (%)",
+                font: {
+                  size: 14,
+                },
+              },
+            },
+            cutout: "70%",
+          },
+        });
+
+        const communityCtx = document
+          .getElementById("communityChart")
+          .getContext("2d");
+        const communityChart = new Chart(communityCtx, {
+          type: "radar",
+          data: {
+            labels: [
+              "Healthcare",
+              "Education",
+              "Infrastructure",
+              "Housing",
+              "Cultural",
+            ],
+            datasets: [
+              {
+                label: "Rössing CSR",
+                data: [85, 90, 75, 60, 40],
+                backgroundColor: "rgba(52, 152, 219, 0.2)",
+                borderColor: "rgba(52, 152, 219, 1)",
+                borderWidth: 2,
+              },
+              {
+                label: "Husab CSR",
+                data: [80, 85, 80, 65, 45],
+                backgroundColor: "rgba(155, 89, 182, 0.2)",
+                borderColor: "rgba(155, 89, 182, 1)",
+                borderWidth: 2,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              title: {
+                display: true,
+                text: "Community Investment Focus Areas",
+                font: {
+                  size: 14,
+                },
+              },
+            },
+            scales: {
+              r: {
+                angleLines: {
+                  display: true,
+                },
+                suggestedMin: 0,
+                suggestedMax: 100,
+              },
+            },
+          },
+        });
+
+        const socialTrendsCtx = document
+          .getElementById("socialTrendsChart")
+          .getContext("2d");
+        const socialTrendsChart = new Chart(socialTrendsCtx, {
+          type: "line",
+          data: {
+            labels: [
+              "2015",
+              "2016",
+              "2017",
+              "2018",
+              "2019",
+              "2020",
+              "2021",
+              "2022",
+              "2023",
+            ],
+            datasets: [
+              {
+                label: "Local Procurement (%)",
+                data: [45, 48, 52, 55, 58, 60, 62, 64, 65],
+                borderColor: "#3498db",
+                backgroundColor: "rgba(52, 152, 219, 0.1)",
+                borderWidth: 3,
+                tension: 0.3,
+                fill: true,
+              },
+              {
+                label: "Female Employment (%)",
+                data: [18, 19, 21, 23, 24, 25, 26, 26.5, 27],
+                borderColor: "#9b59b6",
+                backgroundColor: "rgba(155, 89, 182, 0.1)",
+                borderWidth: 3,
+                tension: 0.3,
+                fill: true,
+              },
+              {
+                label: "Safety (LTIFR)",
+                data: [1.8, 1.6, 1.4, 1.3, 1.2, 1.1, 1.0, 0.9, 0.8],
+                borderColor: "#2980b9",
+                backgroundColor: "rgba(41, 128, 185, 0.1)",
+                borderWidth: 3,
+                tension: 0.3,
+                fill: true,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              title: {
+                display: true,
+                text: "Social Performance Trends (2015-2023)",
+                font: {
+                  size: 16,
+                  weight: "bold",
+                },
+              },
+              tooltip: {
+                mode: "index",
+                intersect: false,
+              },
+              legend: {
+                position: "bottom",
+                labels: {
+                  usePointStyle: true,
+                  padding: 20,
+                },
+              },
+            },
+            scales: {
+              y: {
+                beginAtZero: true,
+              },
+            },
+            animation: {
+              duration: 2000,
+              easing: "easeOutQuart",
+            },
+          },
+        });
+
+        // Economic Charts
+        const fiscalCtx = document
+          .getElementById("fiscalChart")
+          .getContext("2d");
+        const fiscalChart = new Chart(fiscalCtx, {
+          type: "bar",
+          data: {
+            labels: ["Taxes", "Royalties", "Dividends", "Fees"],
+            datasets: [
+              {
+                label: "Revenue (million $)",
+                data: [85, 45, 30, 20],
+                backgroundColor: [
+                  "rgba(230, 126, 34, 0.7)",
+                  "rgba(211, 84, 0, 0.7)",
+                  "rgba(243, 156, 18, 0.7)",
+                  "rgba(245, 176, 65, 0.7)",
+                ],
+                borderWidth: 1,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: {
+                display: false,
+              },
+              title: {
+                display: true,
+                text: "Government Revenue Composition (2023)",
+                font: {
+                  size: 14,
+                },
+              },
+            },
+            scales: {
+              y: {
+                beginAtZero: true,
+              },
+            },
+          },
+        });
+
+        const multiplierCtx = document
+          .getElementById("multiplierChart")
+          .getContext("2d");
+        const multiplierChart = new Chart(multiplierCtx, {
+          type: "pie",
+          data: {
+            labels: ["Direct GDP", "Indirect GDP", "Induced GDP"],
+            datasets: [
+              {
+                data: [3.2, 1.2, 0.6],
+                backgroundColor: ["#e67e22", "#d35400", "#f39c12"],
+                borderWidth: 0,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: {
+                position: "bottom",
+              },
+              title: {
+                display: true,
+                text: "GDP Contribution (% of national GDP)",
+                font: {
+                  size: 14,
+                },
+              },
+            },
+            cutout: "70%",
+          },
+        });
+
+        const innovationCtx = document
+          .getElementById("innovationChart")
+          .getContext("2d");
+        const innovationChart = new Chart(innovationCtx, {
+          type: "doughnut",
+          data: {
+            labels: [
+              "Solar Power",
+              "Water Tech",
+              "Automation",
+              "Rehabilitation",
+            ],
+            datasets: [
+              {
+                data: [40, 30, 20, 10],
+                backgroundColor: ["#f39c12", "#e67e22", "#d35400", "#e74c3c"],
+                borderWidth: 0,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: {
+                position: "bottom",
+              },
+              title: {
+                display: true,
+                text: "Innovation Investment Allocation (%)",
+                font: {
+                  size: 14,
+                },
+              },
+            },
+            cutout: "70%",
+          },
+        });
+
+        const economicTrendsCtx = document
+          .getElementById("economicTrendsChart")
+          .getContext("2d");
+        const economicTrendsChart = new Chart(economicTrendsCtx, {
+          type: "line",
+          data: {
+            labels: [
+              "2015",
+              "2016",
+              "2017",
+              "2018",
+              "2019",
+              "2020",
+              "2021",
+              "2022",
+              "2023",
+            ],
+            datasets: [
+              {
+                label: "Government Revenue ($ million)",
+                data: [120, 110, 130, 140, 150, 145, 160, 175, 180],
+                borderColor: "#e67e22",
+                backgroundColor: "rgba(230, 126, 34, 0.1)",
+                borderWidth: 3,
+                tension: 0.3,
+                fill: true,
+              },
+              {
+                label: "Export Share (%)",
+                data: [8, 9, 10, 11, 12, 11.5, 11.8, 11.7, 12],
+                borderColor: "#d35400",
+                backgroundColor: "rgba(211, 84, 0, 0.1)",
+                borderWidth: 3,
+                tension: 0.3,
+                fill: true,
+              },
+              {
+                label: "Local Procurement (%)",
+                data: [45, 48, 52, 55, 58, 60, 62, 64, 65],
+                borderColor: "#f39c12",
+                backgroundColor: "rgba(243, 156, 18, 0.1)",
+                borderWidth: 3,
+                tension: 0.3,
+                fill: true,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              title: {
+                display: true,
+                text: "Economic Performance Trends (2015-2023)",
+                font: {
+                  size: 16,
+                  weight: "bold",
+                },
+              },
+              tooltip: {
+                mode: "index",
+                intersect: false,
+              },
+              legend: {
+                position: "bottom",
+                labels: {
+                  usePointStyle: true,
+                  padding: 20,
+                },
+              },
+            },
+            scales: {
+              y: {
+                beginAtZero: false,
+              },
+            },
+            animation: {
+              duration: 2000,
+              easing: "easeOutQuart",
+            },
+          },
+        });
+
+        // Integrated Chart
+        const integratedCtx = document
+          .getElementById("integratedChart")
+          .getContext("2d");
+        const integratedChart = new Chart(integratedCtx, {
+          type: "radar",
+          data: {
+            labels: [
+              "Water Use",
+              "Employment",
+              "Revenue",
+              "Health",
+              "Biodiversity",
+              "Innovation",
+            ],
+            datasets: [
+              {
+                label: "Environmental",
+                data: [65, 0, 0, 0, 70, 30],
+                backgroundColor: "rgba(39, 174, 96, 0.2)",
+                borderColor: "rgba(39, 174, 96, 1)",
+                borderWidth: 2,
+                pointBackgroundColor: "rgba(39, 174, 96, 1)",
+              },
+              {
+                label: "Social",
+                data: [0, 85, 0, 80, 0, 0],
+                backgroundColor: "rgba(52, 152, 219, 0.2)",
+                borderColor: "rgba(52, 152, 219, 1)",
+                borderWidth: 2,
+                pointBackgroundColor: "rgba(52, 152, 219, 1)",
+              },
+              {
+                label: "Economic",
+                data: [0, 0, 90, 0, 0, 75],
+                backgroundColor: "rgba(230, 126, 34, 0.2)",
+                borderColor: "rgba(230, 126, 34, 1)",
+                borderWidth: 2,
+                pointBackgroundColor: "rgba(230, 126, 34, 1)",
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              title: {
+                display: true,
+                text: "Integrated Impact Assessment (0-100 scale)",
+                font: {
+                  size: 16,
+                  weight: "bold",
+                },
+              },
+              legend: {
+                position: "bottom",
+              },
+            },
+            scales: {
+              r: {
+                angleLines: {
+                  display: true,
+                },
+                suggestedMin: 0,
+                suggestedMax: 100,
+              },
+            },
+          },
+        });
+      });
     </script>
-</body>
+  </body>
 </html>
