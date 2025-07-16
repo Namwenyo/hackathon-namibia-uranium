@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Uranium Map | Namibia Uranium Hub</title>
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/animations.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        #map {
+            height: 600px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+        }
+        .map-container {
+            position: relative;
+        }
+        .map-overlay {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            max-width: 300px;
+        }
+        .legend {
+            line-height: 1.5;
+            color: #555;
+        }
+        .legend i {
+            width: 18px;
+            height: 18px;
+            float: left;
+            margin-right: 8px;
+            opacity: 0.7;
+        }
+        .info {
+            padding: 6px 8px;
+            background: white;
+            background: rgba(255,255,255,0.8);
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+            border-radius: 5px;
+        }
+        .info h4 {
+            margin: 0 0 5px;
+            color: #777;
+        }
+        .mine-details {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+            display: none;
+        }
+        .mine-details.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+        .mine-tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+        .mine-tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #f8f9fa;
+            margin-right: 5px;
+            border-radius: 5px 5px 0 0;
+            transition: all 0.3s ease;
+        }
+        .mine-tab.active {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        .mine-tab:hover:not(.active) {
+            background-color: #e9ecef;
+        }
+        .mine-content {
+            display: none;
+        }
+        .mine-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+        .mine-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .gallery-item {
+            height: 150px;
+            border-radius: 5px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .gallery-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg"></div>
+    
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <span>Namibia Uranium Hub</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="map.html">Uranium Map</a></li>
+                    <li class="nav-item"><a class="nav-link" href="methods.html">Mining Methods</a></li>
+                    <li class="nav-item"><a class="nav-link" href="environment.html">Environmental Impact</a></li>
+                    <li class="nav-item"><a class="nav-link" href="policy.html">Policy & Safety</a></li>
+                    <li class="nav-item"><a class="nav-link" href="quiz.html">Educational Quiz</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <h1 class="display-4 fw-bold mb-4">Interactive Uranium Map of Namibia</h1>
+                    <p class="lead mb-4">Explore Namibia's uranium deposits, mines, and geological context through our interactive map. Click on locations to view detailed information about each site.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Map Section -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="map-container">
+                        <div id="map"></div>
+                        <div class="map-overlay">
+                            <div class="legend">
+                                <h5>Legend</h5>
+                                <div><i style="background: #e74c3c"></i> Active Mines</div>
+                                <div><i style="background: #3498db"></i> Major Deposits</div>
+                                <div><i style="background: #f39c12"></i> Exploration Sites</div>
+                                <div><i style="background: #2ecc71"></i> Calcrete Deposits</div>
+                                <div><i style="background: #9b59b6"></i> Alaskite Deposits</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="mineDetails" class="mine-details">
+                <div class="mine-tabs">
+                    <div class="mine-tab active" data-tab="overview">Overview</div>
+                    <div class="mine-tab" data-tab="geology">Geology</div>
+                    <div class="mine-tab" data-tab="production">Production</div>
+                </div>
+                
+                <div class="mine-content active" data-content="overview">
+                    <h3 id="mineName">Mine Name</h3>
+                    <p id="mineOverview">Loading overview...</p>
+                </div>
+                
+                <div class="mine-content" data-content="geology">
+                    <h4>Geological Characteristics</h4>
+                    <p id="mineGeology">Loading geological data...</p>
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <h5>Deposit Type</h5>
+                            <p id="depositType">-</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>Ore Grade</h5>
+                            <p id="oreGrade">-</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>Mineralization</h5>
+                            <p id="mineralization">-</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>Host Rock</h5>
+                            <p id="hostRock">-</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mine-content" data-content="production">
+                    <h4>Production Data</h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="chart-container-sm">
+                                <canvas id="mineProductionChart"></canvas>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <th>Annual Production</th>
+                                            <td id="annualProduction">-</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Reserves</th>
+                                            <td id="reserves">-</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Mining Method</th>
+                                            <td id="miningMethod">-</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Processing</th>
+                                            <td id="processing">-</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Operator</th>
+                                            <td id="operator">-</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5>Namibia Uranium Resource Hub</h5>
+                    <p>An educational resource developed for the Global HackAthon Namibia 2025, providing comprehensive information about Namibia's uranium geology, mining methods, environmental impact, and regulatory framework.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4 mb-md-0">
+                    <h5>Resources</h5>
+                    <ul class="footer-links">
+                        <li><a href="map.html">Uranium Map</a></li>
+                        <li><a href="methods.html">Mining Methods</a></li>
+                        <li><a href="environment.html">Environment</a></li>
+                        <li><a href="policy.html">Policy & Safety</a></li>
+                        <li><a href="quiz.html">Educational Quiz</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                    <h5>References</h5>
+                    <ul class="footer-links">
+                        <li><a href="https://world-nuclear.org" target="_blank">World Nuclear Association</a></li>
+                        <li><a href="https://www.rossing.com" target="_blank">Rössing Uranium</a></li>
+                        <li><a href="https://www.mme.gov.na" target="_blank">Namibia MME</a></li>
+                        <li><a href="https://www.unesco.org" target="_blank">UNESCO Reports</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h5>Contact</h5>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-envelope me-2"></i> ewaldineeises05@gmail.com.com</li>
+                        <li><i class="fas fa-map-marker-alt me-2"></i> Otjomuise, Windhoek</li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="mt-4 mb-4">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="mb-0">&copy; 2025 Global HackAthon Namibia. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <p class="mb-0">Developed by Team Uranium Explorers</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
+    <script src="js/map.js"></script>
+    
+</body>
+</html>

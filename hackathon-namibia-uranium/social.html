@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Impact | Namibia Uranium Hub</title>
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/animations.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .dashboard-card {
+            border: none;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            margin-bottom: 30px;
+            background-color: white;
+        }
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        .card-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px 20px;
+        }
+        .card-body {
+            padding: 20px;
+        }
+        .chart-container-sm {
+            position: relative;
+            height: 250px;
+            width: 100%;
+        }
+        .impact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+        }
+        .impact-icon {
+            width: 50px;
+            height: 50px;
+            background-color: rgba(52, 152, 219, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            color: var(--secondary-color);
+            font-size: 20px;
+        }
+        .impact-content {
+            flex-grow: 1;
+        }
+        .impact-value {
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: var(--primary-color);
+        }
+        .slider-container {
+            margin: 30px 0;
+        }
+        .slider-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 5px;
+        }
+        .simulation-result {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            display: none;
+        }
+        .simulation-result.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+        .person-icon {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: #3498db;
+            border-radius: 50%;
+            opacity: 0.7;
+        }
+        .impact-level {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.8rem;
+        }
+        .low {
+            background-color: #27ae60;
+            color: white;
+        }
+        .medium {
+            background-color: #f39c12;
+            color: white;
+        }
+        .high {
+            background-color: #e74c3c;
+            color: white;
+        }
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .data-table th, .data-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        .data-table th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+        }
+        .data-table tr:hover {
+            background-color: #f1f1f1;
+        }
+        .testimonial-card {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        .testimonial-card:before {
+            content: '"';
+            font-size: 60px;
+            color: rgba(52, 152, 219, 0.1);
+            position: absolute;
+            top: 10px;
+            left: 10px;
+        }
+        .testimonial-author {
+            font-weight: bold;
+            margin-top: 10px;
+            color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg"></div>
+    
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <span>Namibia Uranium Hub</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="map.html">Uranium Map</a></li>
+                    <li class="nav-item"><a class="nav-link" href="methods.html">Mining Methods</a></li>
+                    <li class="nav-item"><a class="nav-link" href="environment.html">Environmental Impact</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="social.html">Social Impact</a></li>
+                    <li class="nav-item"><a class="nav-link" href="policy.html">Policy & Safety</a></li>
+                    <li class="nav-item"><a class="nav-link" href="quiz.html">Educational Quiz</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <h1 class="display-4 fw-bold mb-4">Social Impact of Uranium Mining in Namibia</h1>
+                    <p class="lead mb-4">Explore how Namibia's uranium industry affects local communities through employment, economic development, and social programs.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dashboard Section -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle me-2"></i>
+                        Namibia's uranium mining sector contributes approximately 10% of GDP and employs over 6,000 people directly, with thousands more in indirect jobs.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-briefcase me-2"></i> Employment</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-container-sm">
+                                <canvas id="employmentChart"></canvas>
+                            </div>
+                            <div class="impact-item">
+                                <div class="impact-icon">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <div class="impact-content">
+                                    <h5>Direct Employment</h5>
+                                    <div class="impact-value">6,200+ jobs</div>
+                                    <small>Across all uranium mines (2023)</small>
+                                </div>
+                            </div>
+                            <div class="impact-item">
+                                <div class="impact-icon">
+                                    <i class="fas fa-network-wired"></i>
+                                </div>
+                                <div class="impact-content">
+                                    <h5>Indirect Employment</h5>
+                                    <div class="impact-value">15,000+ jobs</div>
+                                    <small>In supporting industries</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4">
+                    <div class="dashboard-card">
+                        <div class="card-header" style="background-color: #27ae60;">
+                            <h3><i class="fas fa-hand-holding-usd me-2"></i> Economic Benefits</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-container-sm">
+                                <canvas id="economicChart"></canvas>
+                            </div>
+                            <div class="impact-item">
+                                <div class="impact-icon" style="color: #27ae60;">
+                                    <i class="fas fa-landmark"></i>
+                                </div>
+                                <div class="impact-content">
+                                    <h5>Government Revenue</h5>
+                                    <div class="impact-value">NAD 2.8 billion</div>
+                                    <small>Taxes and royalties (2022)</small>
+                                </div>
+                            </div>
+                            <div class="impact-item">
+                                <div class="impact-icon" style="color: #27ae60;">
+                                    <i class="fas fa-store"></i>
+                                </div>
+                                <div class="impact-content">
+                                    <h5>Local Procurement</h5>
+                                    <div class="impact-value">NAD 1.2 billion</div>
+                                    <small>Spent with Namibian suppliers</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4">
+                    <div class="dashboard-card">
+                        <div class="card-header" style="background-color: #e67e22;">
+                            <h3><i class="fas fa-graduation-cap me-2"></i> Skills Development</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-container-sm">
+                                <canvas id="skillsChart"></canvas>
+                            </div>
+                            <div class="impact-item">
+                                <div class="impact-icon" style="color: #e67e22;">
+                                    <i class="fas fa-user-graduate"></i>
+                                </div>
+                                <div class="impact-content">
+                                    <h5>Training Programs</h5>
+                                    <div class="impact-value">1,200+ trained</div>
+                                    <small>Annually across all mines</small>
+                                </div>
+                            </div>
+                            <div class="impact-item">
+                                <div class="impact-icon" style="color: #e67e22;">
+                                    <i class="fas fa-user-tie"></i>
+                                </div>
+                                <div class="impact-content">
+                                    <h5>Namibianization</h5>
+                                    <div class="impact-value">92%</div>
+                                    <small>Of workforce are Namibians</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mt-4">
+                <div class="col-lg-12">
+                    <div class="dashboard-card">
+                        <div class="card-header" style="background-color: #9b59b6;">
+                            <h3><i class="fas fa-chart-line me-2"></i> Social Development Trends</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-8">
+                                    <div class="chart-container">
+                                        <canvas id="trendsChart"></canvas>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <h4>Key Indicators</h4>
+                                    <div class="impact-item">
+                                        <div class="impact-icon" style="color: #9b59b6;">
+                                            <i class="fas fa-briefcase"></i>
+                                        </div>
+                                        <div class="impact-content">
+                                            <h5>Employment Growth</h5>
+                                            <div class="impact-value">+42% since 2010</div>
+                                            <small>With Husab mine opening</small>
+                                        </div>
+                                    </div>
+                                    <div class="impact-item">
+                                        <div class="impact-icon" style="color: #9b59b6;">
+                                            <i class="fas fa-money-bill-wave"></i>
+                                        </div>
+                                        <div class="impact-content">
+                                            <h5>Wage Increases</h5>
+                                            <div class="impact-value">+65% since 2010</div>
+                                            <small>Above inflation rates</small>
+                                        </div>
+                                    </div>
+                                    <div class="impact-item">
+                                        <div class="impact-icon" style="color: #9b59b6;">
+                                            <i class="fas fa-home"></i>
+                                        </div>
+                                        <div class="impact-content">
+                                            <h5>Housing Investments</h5>
+                                            <div class="impact-value">NAD 350 million</div>
+                                            <small>Employee housing since 2015</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mt-4">
+                <div class="col-lg-6">
+                    <div class="dashboard-card">
+                        <div class="card-header" style="background-color: #e74c3c;">
+                            <h3><i class="fas fa-sliders-h me-2"></i> Community Impact Simulation</h3>
+                        </div>
+                        <div class="card-body">
+                            <h5>Employment Simulation</h5>
+                            <p>Adjust the production level to see how it affects employment and community benefits in Namibia's uranium mines.</p>
+                            
+                            <div class="slider-container">
+                                <label for="productionSlider" class="form-label">Uranium Production: <span id="productionValue">5,000</span> tU/year</label>
+                                <input type="range" class="form-range" id="productionSlider" min="1000" max="10000" value="5000" step="500">
+                                <div class="slider-labels">
+                                    <span>1,000</span>
+                                    <span>10,000</span>
+                                </div>
+                            </div>
+                            
+                            <div id="employmentSimulation" style="height: 200px; position: relative; background-color: #f8f9fa; border-radius: 5px; overflow: hidden;">
+                                <div id="personIcons"></div>
+                            </div>
+                            
+                            <div id="simulationResult" class="simulation-result">
+                                <h5>Estimated Social Impacts</h5>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p><i class="fas fa-users me-2"></i> Direct Jobs: <strong id="simJobs">3,200</strong></p>
+                                        <p><i class="fas fa-network-wired me-2"></i> Indirect Jobs: <strong id="simIndirect">8,000</strong></p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p><i class="fas fa-landmark me-2"></i> Government Revenue: <strong id="simRevenue">NAD 1.4 billion</strong></p>
+                                        <p><i class="fas fa-home me-2"></i> Housing Units: <strong id="simHousing">450</strong></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6">
+                    <div class="dashboard-card">
+                        <div class="card-header" style="background-color: #2ecc71;">
+                            <h3><i class="fas fa-table me-2"></i> Social Responsibility Data</h3>
+                        </div>
+                        <div class="card-body">
+                            <h5>Community Investment (2023)</h5>
+                            <p>Recent social responsibility data from Namibia's uranium mines.</p>
+                            
+                            <div class="table-responsive">
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Program</th>
+                                            <th>Rössing</th>
+                                            <th>Husab</th>
+                                            <th>Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Education Support (NAD)</td>
+                                            <td>12.5 million</td>
+                                            <td>8.2 million</td>
+                                            <td>20.7 million</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Healthcare (NAD)</td>
+                                            <td>7.8 million</td>
+                                            <td>5.5 million</td>
+                                            <td>13.3 million</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Local Procurement (NAD)</td>
+                                            <td>650 million</td>
+                                            <td>550 million</td>
+                                            <td>1.2 billion</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Female Employment (%)</td>
+                                            <td>24</td>
+                                            <td>22</td>
+                                            <td>23</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Vocational Training</td>
+                                            <td>320</td>
+                                            <td>280</td>
+                                            <td>600</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Community Projects</td>
+                                            <td>45</td>
+                                            <td>32</td>
+                                            <td>77</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                            <div class="alert alert-success mt-3">
+                                <i class="fas fa-check-circle me-2"></i>
+                                All major uranium mines in Namibia have comprehensive Social and Labour Plans approved by the government.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mt-4">
+                <div class="col-lg-6">
+                    <div class="dashboard-card">
+                        <div class="card-header" style="background-color: #3498db;">
+                            <h3><i class="fas fa-comments me-2"></i> Community Voices</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="testimonial-card">
+                                <p>"The uranium mine brought jobs to our community. My son got training as an electrician and now supports our whole family. But we need more opportunities for women."</p>
+                                <div class="testimonial-author">- Helena Kambonde, Arandis resident</div>
+                            </div>
+                            
+                            <div class="testimonial-card">
+                                <p>"Our school received computers and science lab equipment from the mine's CSR program. It has transformed our students' learning experience."</p>
+                                <div class="testimonial-author">- Mr. Johannes, School Principal</div>
+                            </div>
+                            
+                            <div class="testimonial-card">
+                                <p>"While the mines provide jobs, we're concerned about the long-term sustainability. What happens when the uranium runs out? We need more economic diversification."</p>
+                                <div class="testimonial-author">- David //Garoëb, Community Leader</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6">
+                    <div class="dashboard-card">
+                        <div class="card-header" style="background-color: #f39c12;">
+                            <h3><i class="fas fa-balance-scale me-2"></i> Challenges & Opportunities</h3>
+                        </div>
+                        <div class="card-body">
+                            <h5>Balancing Benefits and Concerns</h5>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="impact-item">
+                                        <div class="impact-icon" style="color: #27ae60;">
+                                            <i class="fas fa-plus-circle"></i>
+                                        </div>
+                                        <div class="impact-content">
+                                            <h5>Positive Impacts</h5>
+                                            <ul>
+                                                <li>Job creation in remote areas</li>
+                                                <li>Skills development</li>
+                                                <li>Infrastructure improvements</li>
+                                                <li>Local business opportunities</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="impact-item">
+                                        <div class="impact-icon" style="color: #e74c3c;">
+                                            <i class="fas fa-minus-circle"></i>
+                                        </div>
+                                        <div class="impact-content">
+                                            <h5>Challenges</h5>
+                                            <ul>
+                                                <li>Boom-bust cycle dependence</li>
+                                                <li>Limited female participation</li>
+                                                <li>Housing shortages</li>
+                                                <li>Cultural impacts</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="alert alert-info mt-3">
+                                <i class="fas fa-lightbulb me-2"></i>
+                                The Namibian government requires mines to implement Social and Labour Plans (SLPs) that address these challenges through local employment targets, housing programs, and community development initiatives.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5>Namibia Uranium Resource Hub</h5>
+                    <p>An educational resource developed for the Global HackAthon Namibia 2025, providing comprehensive information about Namibia's uranium geology, mining methods, environmental impact, and regulatory framework.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4 mb-md-0">
+                    <h5>Resources</h5>
+                    <ul class="footer-links">
+                        <li><a href="map.html">Uranium Map</a></li>
+                        <li><a href="methods.html">Mining Methods</a></li>
+                        <li><a href="environment.html">Environment</a></li>
+                        <li><a href="social.html">Social Impact</a></li>
+                        <li><a href="policy.html">Policy & Safety</a></li>
+                        <li><a href="quiz.html">Educational Quiz</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                    <h5>References</h5>
+                    <ul class="footer-links">
+                        <li><a href="https://www.rossing.com" target="_blank">Rössing Uranium Reports</a></li>
+                        <li><a href="https://www.cgnpc.com" target="_blank">Husab Mine Reports</a></li>
+                        <li><a href="https://www.mme.gov.na" target="_blank">Namibia MME</a></li>
+                        <li><a href="https://www.namibiaun.org" target="_blank">Namibia UN Reports</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h5>Contact</h5>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-envelope me-2"></i> ewaldineeises05@gmail.com</li>
+                        <li><i class="fas fa-map-marker-alt me-2"></i> Otjomuise, Windhoek</li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="mt-4 mb-4">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="mb-0">&copy; 2025 Global HackAthon Namibia. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <p class="mb-0">Developed by Team Uranium Explorers</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/social.js"></script>
+</body>
+</html>
